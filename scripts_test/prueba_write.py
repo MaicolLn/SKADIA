@@ -2,7 +2,7 @@ from pymodbus.client import ModbusTcpClient
 from time import sleep
 
 IP, PORT, UNIT = "192.168.1.200", 502, 205
-DEFAULT_DELAY = 4  # segundos
+DEFAULT_DELAY = 1.5  # segundos
 
 def with_client(fn):
     c = ModbusTcpClient(IP, port=PORT, timeout=3, strict=False)
@@ -34,12 +34,12 @@ if __name__ == "__main__":
 
     print("3 ON :", set_coil(3, True, delay=d))
     print("4 ON :", set_coil(4, True, delay=d))
-
+    sleep(5)
     print("3    :", get_coil(3, delay=d))
     print("4    :", get_coil(4, delay=d))
-
+    sleep(5)
     print("3 OFF:", set_coil(3, False, delay=d))
     print("4 OFF:", set_coil(4, False, delay=d))
-
+    sleep(5)
     print("3    :", get_coil(3, delay=d))
     print("4    :", get_coil(4, delay=d))

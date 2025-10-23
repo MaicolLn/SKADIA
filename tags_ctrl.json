@@ -1,0 +1,77 @@
+{
+  "TAG_TO_ACTION": {
+    "NODO_611_CMD01": ["Nodo_611", "Generación 1"],
+    "NODO_611_CMD02": ["Nodo_611", "Generación 2"],
+    "NODO_611_CMD03": ["Nodo_611", "Generación 3"],
+    "NODO_611_CMD04": ["Nodo_611", "linea_611_684"],
+    "NODO_611_CMD05": ["Nodo_611", "carga"],
+    "NODO_611_CMD06": ["Nodo_611", "none"],
+    "NODO_611_CMD07": ["Nodo_611", "Capacitor_611"],
+    "NODO_611_CMD08": ["Nodo_611", "none"],
+
+    "NODO_633_CMD01": ["Nodo_633", "Generación 1"],
+    "NODO_633_CMD02": ["Nodo_633", "Generación 2"],
+    "NODO_633_CMD03": ["Nodo_633", "Generación 3"],
+    "NODO_633_CMD04": ["Nodo_633", "transformador"],
+    "NODO_633_CMD05": ["Nodo_633", "carga"],
+    "NODO_633_CMD06": ["Nodo", "none"],
+    "NODO_633_CMD07": ["Nodo", "none"],
+    "NODO_633_CMD08": ["Nodo", "none"],
+
+    "NODO_645_CMD01": ["Nodo", "carga"],
+    "NODO_645_CMD02": ["Nodo_645", "carga"],
+    "NODO_645_CMD03": ["Nodo_645", "linea_645_646"],
+    "NODO_645_CMD04": ["Nodo_645", "linea_632_645"],
+    "NODO_645_CMD05": ["Nodo_645", "Generación 3"],
+    "NODO_645_CMD06": ["Nodo_645", "Generación 2"],
+    "NODO_645_CMD07": ["Nodo_645", "Generación 1"],
+    "NODO_645_CMD08": ["Nodo", "carga"],
+
+    "NODO_646_CMD01": ["Nodo_646", "NONE"],
+    "NODO_646_CMD02": ["Nodo_646", "NONE"],
+    "NODO_646_CMD03": ["Nodo_646", "carga"],
+    "NODO_646_CMD04": ["Nodo_646", "linea_646_645"],
+    "NODO_646_CMD05": ["Nodo_646", "Generación 3"],
+    "NODO_646_CMD06": ["Nodo_646", "Generación 2"],
+    "NODO_646_CMD07": ["Nodo_646", "Generación 1"],
+    "NODO_646_CMD08": ["Nodo_646", "NONE"],
+
+    "NODO_692_CMD01": ["Nodo_692", "n"],
+    "NODO_692_CMD02": ["Nodo_692", "linea_692_675"],
+    "NODO_692_CMD03": ["Nodo_692", "carga"],
+    "NODO_692_CMD04": ["Nodo_692", "linea_692_671"],
+    "NODO_692_CMD05": ["Nodo_692", "Generación 3"],
+    "NODO_692_CMD06": ["Nodo_692", "Generación 2"],
+    "NODO_692_CMD07": ["Nodo_692", "Generación 1"],
+    "NODO_692_CMD08": ["Nodo_692", "n"],
+
+    "NODO_675_CMD01": ["Nodo_675", "Generación 1"],
+    "NODO_675_CMD02": ["Nodo_675", "Generación 2"],
+    "NODO_675_CMD03": ["Nodo_675", "Generación 3"],
+    "NODO_675_CMD04": ["Nodo_675", "linea_675_692"],
+    "NODO_675_CMD05": ["Nodo_675", "carga"],
+    "NODO_675_CMD06": ["Nodo_675", "linea_675_680"],
+    "NODO_675_CMD07": ["Nodo_675", "Capacitor 1"],
+    "NODO_675_CMD08": ["Nodo_675", "none"]
+  },
+
+  "WATCH_TAGS": [
+    "NODO_611_CMD01","NODO_611_CMD02","NODO_611_CMD03","NODO_611_CMD04",
+    "NODO_611_CMD05","NODO_611_CMD06","NODO_611_CMD07","NODO_611_CMD08",
+
+    "NODO_633_CMD01","NODO_633_CMD02","NODO_633_CMD03","NODO_633_CMD04",
+    "NODO_633_CMD05","NODO_633_CMD06","NODO_633_CMD07","NODO_633_CMD08",
+
+    "NODO_645_CMD01","NODO_645_CMD02","NODO_645_CMD03","NODO_645_CMD04",
+    "NODO_645_CMD05","NODO_645_CMD06","NODO_645_CMD07","NODO_645_CMD08",
+
+    "NODO_646_CMD01","NODO_646_CMD02","NODO_646_CMD03","NODO_646_CMD04",
+    "NODO_646_CMD05","NODO_646_CMD06","NODO_646_CMD07","NODO_646_CMD08",
+
+    "NODO_675_CMD01","NODO_675_CMD02","NODO_675_CMD03","NODO_675_CMD04",
+    "NODO_675_CMD05","NODO_675_CMD06","NODO_675_CMD07","NODO_675_CMD08",
+
+    "NODO_692_CMD01","NODO_692_CMD02","NODO_692_CMD03","NODO_692_CMD04",
+    "NODO_692_CMD05","NODO_692_CMD06","NODO_692_CMD07","NODO_692_CMD08"
+  ]
+}

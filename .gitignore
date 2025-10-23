@@ -1,21 +1,34 @@
-# Ignorar el entorno virtual
-venv/
-ENV/
-env/
+# Entornos virtuales
 .venv/
+venv/
+env/
 
-# Archivos de caché de Python
+# Python cache / builds
 __pycache__/
 *.py[cod]
-*.pyo
+*.so
+*.egg-info/
+build/
+dist/
 
-# Archivos de configuración locales
-*.env
-*.json
+# Tests / tools
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage.xml
 
-# Archivos de compilación y logs
-*.log
+# Jupyter
+.ipynb_checkpoints/
 
-# Carpetas de IDEs comunes
+# IDE / OS
 .vscode/
 .idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Variables/credenciales (ajústalo a tu proyecto)
+credenciales.json
+.env

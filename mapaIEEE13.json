@@ -1,0 +1,143 @@
+{
+  "Nodos": {
+    "Nodo_650": { "slave": 250, "linea_650_632": 5 },
+
+    "Nodo_632": {
+      "slave": 232,
+      "linea_632_633": 6,
+      "linea_632_645": 7,
+      "linea_632_671": 8,
+      "carga_1": 10,
+      "linea_632_650": null            
+    },
+
+
+    "Nodo_633": {
+      "slave": 204,
+      "transformador": 3,
+      "carga": 4,
+      "Generación 1": 0,
+      "Generación 2": 1,
+      "Generación 3":2         
+    },
+
+    "Nodo_645": {
+      "slave": 205,
+      "linea_645_646": 4,
+      "carga": 5,
+      "linea_632_645": 3,
+      "Generación 1": 0,
+      "Generación 2": 1,
+      "Generación 3":2 
+      
+
+    },
+
+    "Nodo_646": {
+      "slave": 206,
+      "carga": 4,
+      "linea_646_645": 3,
+      "Generación 1": 0,
+      "Generación 2": 1,
+      "Generación 3":2        
+    },
+
+    "Nodo_671": {
+      "slave": 271,
+      "linea_671_680": 16,
+      "linea_671_684": 17,
+      "linea_671_692": 18,
+      "carga_5": 19,
+      "linea_671_632": null            
+    },
+
+    "Nodo_675": {
+      "slave": 209,
+      "linea_675_680": 4,
+      "carga": 6,
+      "linea_675_692": 3,
+      "Generación 1": 0,
+      "Generación 2": 1,
+      "Generación 3":2,
+      "Capacitor 1": 5      
+    },
+
+    "Nodo_680": {
+      "slave": 280,
+      "carga_7": 22,
+      "linea_680_671": null            
+    },
+
+    "Nodo_684": {
+      "slave": 284,
+      "linea_684_611": 23,
+      "linea_684_652": 24,
+      "carga_8": 25,
+      "linea_684_671": null,           
+      "linea_684_675": null           
+    },
+
+    "Nodo_692": {
+      "slave": 208,
+      "linea_692_675": 4,
+      "carga": 5,
+      "linea_692_671": 3,
+      "Generación 3": 2,
+      "Generación 2": 1,
+      "Generación 1":0 
+
+    },
+
+    "Nodo_611": {
+      "slave":211,
+      "carga": 5,
+      "linea_611_684": 3,
+      "Capacitor_611": 4,          
+      "Generación 3": 2,
+      "Generación 2": 1,
+      "Generación 1":0          
+    },
+
+    "Nodo_652": {
+      "slave": 252,
+      "carga_11": 29,
+      "linea_652_684": null           
+    }
+  }
+,
+  "Medidores": {
+    "Medidor_150": { "nodo": "Nodo_650", "slave": 102 },
+    "Medidor_133": { "nodo": "Nodo_633", "slave": 103 },
+    "Medidor_145": { "nodo": "Nodo_645", "slave": 105 },
+    "Medidor_146": { "nodo": "Nodo_646", "slave": 106 },
+    "Medidor_175": { "nodo": "Nodo_675", "slave": 109 },
+    "Medidor_111": { "nodo": "Nodo_611", "slave": 111 },
+    "Medidor_192": { "nodo": "Nodo_692", "slave": 108 }
+  },
+"Registros_Medidor": {
+  "Voltaje_A":               { "addr": 3028, "unit": "V",    "decode": "float32" },
+  "Voltaje_B":               { "addr": 3030, "unit": "V",    "decode": "float32" },
+  "Voltaje_C":               { "addr": 3032, "unit": "V",    "decode": "float32" },
+  "Voltaje_AB":              { "addr": 3034, "unit": "V",    "decode": "float32" },
+  "Voltaje_BC":              { "addr": 3036, "unit": "V",    "decode": "float32" },
+  "Voltaje_CA":              { "addr": 3038, "unit": "V",    "decode": "float32" },
+  "Voltaje_Promedio_Fase":  { "addr": 3040, "unit": "V",    "decode": "float32" },
+  "Voltaje_Promedio_Linea": { "addr": 3036, "unit": "V",    "decode": "float32" },
+
+  "Corriente_A":            { "addr": 3000, "unit": "A",    "decode": "float32" },
+  "Corriente_B":            { "addr": 3002, "unit": "A",    "decode": "float32" },
+  "Corriente_C":            { "addr": 3004, "unit": "A",    "decode": "float32" },
+  "Corriente_N":            { "addr": 3006, "unit": "A",    "decode": "float32" },
+  "Corriente_Promedio":     { "addr": 3010, "unit": "A",    "decode": "float32" },
+
+  "Potencia_Activa_Total":  { "addr": 3060, "unit": "kW",   "decode": "float32" },
+  "Potencia_Reactiva_Total":{ "addr": 3068, "unit": "kvar", "decode": "float32" },
+  "Potencia_Aparente_Total":{ "addr": 3104, "unit": "kVA",  "decode": "float32" },
+  "Factor_Potencia_Total":  { "addr": 3106, "unit": "pu",   "decode": "float32" },
+
+  "Energia_Activa_Total":   { "addr": 3204, "unit": "kWh",  "decode": "u32" },
+  "Energia_Reactiva_Total": { "addr": 3208, "unit": "kvarh","decode": "u32" },
+  "Energia_Aparente_Total": { "addr": 3212, "unit": "kVAh", "decode": "u32" }
+}
+
+}

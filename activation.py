@@ -1,5 +1,8 @@
-from tool_f.modbus_tools import escribir_plc, leer_plc, leer_medidor
 
-# print(leer_medidor("Medidor_132", "Voltaje_B", return_unit=True))
-print(escribir_plc("Nodo_645", "linea_645_646", False))
-print(leer_plc("Nodo_645", "carga_1"))
+import subprocess, shlex
+cmd = "sudo -n /usr/bin/supervisorctl status plc4xclient"
+p = subprocess.run(shlex.split(cmd), capture_output=True, text=True, timeout=10)
+print("rc=", p.returncode)
+print("STDOUT:\n", repr(p.stdout))
+print("STDERR:\n", repr(p.stderr))
+
