@@ -2,20 +2,26 @@
 # -*- coding: utf-8 -*-
 
 """
-dr_onchange_periodic_pt_hr.py
-- Cambia cargas vía HR (0/1) en un servidor Modbus local SOLO cuando DR lo requiere.
-- Conexión Modbus: se abre únicamente al enviar el comando, se cierra inmediatamente.
-- Después de cada comando, pausa 10 s antes de volver a leer PT.
-- Lógica: si PT > Pmax(1+histéresis) → deslastra en orden de prioridad (Pri3→Pri2→Pri1).
-         si PT < Pmin(1−histéresis) → restaura en orden (Pri1→Pri2→Pri3).
-- No pre-lee HR antes de escribir (cumple tu requerimiento).
+dr_onchange_periodic_pt_hr.py  (Mongo-driven action, Meter-based verification with anti-stale guard)
+
+PHASES
+- NORMAL (Mongo): Read PT from Mongo. If outside hysteresis band -> perform ONE action (restore/shed),
+  then start a 10 s pause and set await_verify=True.
+- VERIFY (Meter): After the pause, read PT from the physical meter (leer_medidor). If still outside band -> perform ONE action,
+  then pause 10 s and KEEP await_verify=True. If in-band -> clear await_verify and set prefer_meter_after_clear=True,
+  which forces the next apparent Mongo breach to be rechecked by the meter before acting (prevents stale Mongo causing extra actions).
+
+OTHER RULES
+- Exactly ONE action per evaluation.
+- 10 s hard pause after EVERY action (no PT reads during pause).
+- No pre-read of HR before writing; Modbus connection opens only to write and closes immediately.
+- Starts the PT reader automatically at boot if DR_STATE is already True.
 """
 
 from __future__ import annotations
 import time
 import threading
 from typing import Optional, List, Tuple, Dict
-from datetime import datetime, timezone
 
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
@@ -28,42 +34,56 @@ COL_RT          = "realtimeData"
 
 # Tags de control
 TAG_DR_STATE    = "DR_STATE"
-TAG_P_TOT       = "NODO650_P_TOT"   # PT leído desde Mongo
+TAG_P_TOT       = "NODO650_P_TOT"   # PT primario desde Mongo (fase NORMAL)
 TAG_P_MIN       = "DR_Pmin"
 TAG_P_MAX       = "DR_Pmax"
 TAG_PRI_1       = "DR_PRI1"
 TAG_PRI_2       = "DR_PRI2"
 TAG_PRI_3       = "DR_PRI3"
 
-# ----------------- Config Modbus (tu servidor) -----------------
+# ----------------- Config Modbus (servidor local) -----------------
 MB_HOST         = "127.0.0.1"
 MB_PORT         = 1502
 MB_UNIT         = 1
 MB_TIMEOUT      = 2.0
 
-# Mapea NODO -> índice 0-based del HR a escribir (U16 0/1).
-# EJEMPLO confirmado por tus logs: NODO 645 -> idx0=17 (4x00018)
+# Mapea NODO -> índice 0-based del HR a escribir (U16 0/1)
 NODE_TO_HR_IDX: dict[int, int] = {
-    645: 17,   # 4x00018
-    # 634: <idx>,
-    # 646: <idx>,
-    # 675: <idx>,
-    # 611: <idx>,
-    # 692: <idx>,
+    645: 20,   # 4x00021
+    634: 37,
+    646: 52,
+    675: 84,
+    611: 68,
+    692: 100,
 }
 
-# Periodicidad de lectura de PT mientras DR=ON
+# Periodicidad de lectura (cuando no hay pausa activa)
 READ_PERIOD_S       = 1.0
 CONNECT_BACKOFF     = 2.0
 
-# Histéresis
+# Histéresis relativa
 HYST_REL            = 0.05   # 5%
 
-# Pausa dura después de cada write (tu requerimiento)
-POST_CMD_PAUSE_S    = 10.0
+# Pausa dura después de cada write
+POST_CMD_PAUSE_S    = 20  # ajusta aquí la espera entre decisiones
 
 # Valores de prioridad permitidos
 ALLOWED_NODES = {634, 646, 645, 675, 611, 692}
+
+# ----------------- Lector de Medidor (solo en fase VERIFY) -----------------
+try:
+    from tool_f.modbus_tools import leer_medidor, RUTA_JSON as MT_RUTA_JSON, IP as MT_IP, PORT as MT_PORT
+    METER_AVAILABLE = True
+except Exception:
+    METER_AVAILABLE = False
+    MT_RUTA_JSON = None
+    MT_IP = None
+    MT_PORT = None
+
+METER_NAME      = "Medidor_150"
+METER_PARAM_PT  = "Potencia_Activa_Total"
+METER_TIMEOUT_S = 2.0  # ajustable
+
 
 # -------------------------------------------
 # -------- utilidades Mongo --------
@@ -79,7 +99,7 @@ def read_tag_raw(db, tag: str):
     return _extract_value(
         db[COL_RT].find_one(
             {"tag": tag},
-            {"value":1, "valueString":1, "valueJson":1, "lastValue":1}
+            {"value":1, "valueString":1, "valueJson":1, "lastValue":1, "_id":0, "tag":1}
         )
     )
 
@@ -115,6 +135,34 @@ def _norm_pri_val(raw) -> Optional[int]:
     except Exception:
         return None
 
+
+# -------------------------------------------
+# -------- PT helpers --------
+def read_pt_mongo(db) -> Optional[float]:
+    """PT desde Mongo (fase NORMAL)."""
+    return read_tag_float(db, TAG_P_TOT)
+
+def read_pt_meter_verify() -> Optional[float]:
+    """PT desde el medidor (fase VERIFY). Conservador: si falla, devolvemos None y no actuamos."""
+    if not METER_AVAILABLE:
+        return None
+    try:
+        val = leer_medidor(
+            medidor=METER_NAME,
+            parametro=METER_PARAM_PT,
+            ruta_json=MT_RUTA_JSON,
+            host=MT_IP,
+            port=MT_PORT,
+            timeout=METER_TIMEOUT_S,
+            decode="float32",
+            return_unit=False
+        )
+        return _as_float(val)
+    except Exception as e:
+        print(f"[PT] Meter read (VERIFY) failed: {e}")
+        return None
+
+
 # -------------------------------------------
 # -------- utilidades Modbus (conexión por write) --------
 def _write_hr_bool_once(hr_idx0: int, desired: bool) -> bool:
@@ -139,12 +187,11 @@ def _write_hr_bool_once(hr_idx0: int, desired: bool) -> bool:
     finally:
         cli.close()
 
+
 # -------------------------------------------
 # -------- lector periódico de PT + lógica DR --------
 class PeriodicPTReader:
-    """Lee PT (tag Mongo) periódicamente y aplica lógica DR.
-       Acciones: escribir HR (0/1) conectando SOLO al enviar y cerrando luego.
-    """
+    """DR engine con dos fases: NORMAL (Mongo) y VERIFY (Medidor)."""
     def __init__(self, db, period_s: float = 1.0):
         self.db = db
         self.period_s = max(0.1, float(period_s))
@@ -152,9 +199,15 @@ class PeriodicPTReader:
         self._thr: Optional[threading.Thread] = None
         self._pause_until: float = 0.0  # bloquea lectura de P tras cada write
 
-        # cache de última orden enviada por nodo (para no repetir y avanzar al siguiente)
-        # True = ON ordenado, False = OFF ordenado
+        # cache de última orden enviada por nodo (True=ON, False=OFF)
         self._last_cmd_desired: Dict[int, bool] = {}
+
+        # Estado de verificación
+        self._await_verify: bool = False        # True => próxima medición POR MEDIDOR
+        self._last_action: Optional[str] = None # "shed"/"restore" (debug)
+
+        # Anti-stale guard: tras limpiar verificación, preferir medir con medidor antes de actuar por Mongo
+        self._prefer_meter_after_clear: bool = False
 
     def start(self):
         if self._thr and self._thr.is_alive():
@@ -182,42 +235,37 @@ class PeriodicPTReader:
         state = "ON" if desired else "OFF"
         if ok:
             print(f"[DR] HR WRITE: node={node} idx0={hr_idx0} (4x{hr_idx0+1:05d}) <- {1 if desired else 0}  ({state})")
-            # memoriza la orden para no repetirla innecesariamente
             self._last_cmd_desired[node] = desired
         else:
             print(f"[DR] ERROR escribiendo HR node={node} idx0={hr_idx0} ({state})")
 
-        # Pausa dura antes de volver a leer P (tu requerimiento)
+        # Pausa dura antes de volver a leer P
         self._pause_until = time.time() + POST_CMD_PAUSE_S
         return True  # se intentó (independiente de ok)
 
     # -------- prioridades --------
     def _get_priorities(self) -> List[Tuple[str, int]]:
-        raw1 = read_tag_raw(self.db, TAG_PRI_1)
-        raw2 = read_tag_raw(self.db, TAG_PRI_2)
-        raw3 = read_tag_raw(self.db, TAG_PRI_3)
+        raws = [("Pri1", read_tag_raw(self.db, TAG_PRI_1)),
+                ("Pri2", read_tag_raw(self.db, TAG_PRI_2)),
+                ("Pri3", read_tag_raw(self.db, TAG_PRI_3))]
 
-        n1 = _norm_pri_val(raw1)
-        n2 = _norm_pri_val(raw2)
-        n3 = _norm_pri_val(raw3)
+        seen, res = set(), []
+        for label, raw in raws:
+            n = _norm_pri_val(raw)
+            if n is None:
+                continue
+            if n in seen:
+                print(f"[DR] (WARN) {label} dup node {n}, skipping.")
+                continue
+            res.append((label, n))
+            seen.add(n)
 
-        print(f"[DR] Prioridades actuales: Pri1={raw1}->{n1}, Pri2={raw2}->{n2}, Pri3={raw3}->{n3}")
-
-        res: List[Tuple[str, int]] = []
-        if n1 is not None: res.append(("Pri1", n1))
-        if n2 is not None: res.append(("Pri2", n2))
-        if n3 is not None: res.append(("Pri3", n3))
+        print("[DR] Prioridades: " + ", ".join(f"{lbl}={n}" for lbl, n in res))
         return res
 
     # -------- acciones --------
     def _shed_once(self, order_p3_p2_p1: List[Tuple[str,int]]) -> bool:
-        """
-        Deslastra UNA carga por ciclo (para respetar tu pausa de 10 s).
-        - Orden: Pri3 -> Pri2 -> Pri1.
-        - No pre-lee HR; usa el cache de última orden para saltar nodos ya ordenados OFF.
-        """
         for label, node in order_p3_p2_p1:
-            # si ya ordenamos OFF a este nodo, salta al siguiente
             if self._last_cmd_desired.get(node) is False:
                 continue
             self._send_node_cmd(node, False)
@@ -226,11 +274,6 @@ class PeriodicPTReader:
         return False
 
     def _restore_once(self, order_p1_p2_p3: List[Tuple[str,int]]) -> bool:
-        """
-        Restaura UNA carga por ciclo.
-        - Orden: Pri1 -> Pri2 -> Pri3.
-        - Sin pre-lectura; usa cache para no repetir ON al mismo nodo.
-        """
         for label, node in order_p1_p2_p3:
             if self._last_cmd_desired.get(node) is True:
                 continue
@@ -239,63 +282,108 @@ class PeriodicPTReader:
             return True
         return False
 
-    # -------- decisión con histéresis --------
-    def on_power_sample(self, pt_value: float):
+    # -------- evaluación central por valor y fase --------
+    def _on_power_sample_value(self, pt_value: float, source: str):
+        """Decide basado en un PT concreto y la fase actual."""
         pmin = read_tag_float(self.db, TAG_P_MIN)
         pmax = read_tag_float(self.db, TAG_P_MAX)
         if pmin is None or pmax is None:
-            print(f"[DR] Falta DR_Pmin/DR_Pmax (pmin={pmin}, pmax={pmax})")
+            print("[DR] ERROR: DR_Pmin/DR_Pmax missing or not numeric.")
             return
 
         pmin_lo = pmin * (1.0 - HYST_REL)
         pmax_hi = pmax * (1.0 + HYST_REL)
 
-        pris = self._get_priorities()          # [('Pri1', n1), ('Pri2', n2), ('Pri3', n3)]
-        order_restore = pris                    # Pri1 -> Pri2 -> Pri3
-        order_shed    = list(reversed(pris))    # Pri3 -> Pri2 -> Pri1
+        pris = self._get_priorities()
+        if not pris:
+            print("[DR] WARN: No hay prioridades válidas (DR_PRI1..3).")
+            return
 
-        print(f"[DR] PT={pt_value:.3f} kW | Pmin={pmin} (lo={pmin_lo:.3f}) | "
-              f"Pmax={pmax} (hi={pmax_hi:.3f}) | pris={pris}")
+        order_restore = pris                 # Pri1 -> Pri2 -> Pri3
+        order_shed    = list(reversed(pris)) # Pri3 -> Pri2 -> Pri1
 
-        # 1) PRIORIDAD: cumplir Pmin (si estamos POR DEBAJO, encendemos UNA carga)
-        if pt_value < pmin_lo:
+        print(f"[DR] PT_{source}={pt_value:.3f} kW | Pmin={pmin:.3f} (lo={pmin_lo:.3f}) | "
+              f"Pmax={pmax:.3f} (hi={pmax_hi:.3f}) | phase={'VERIFY' if self._await_verify else 'NORMAL'}")
+
+        below = pt_value < pmin_lo
+        above = pt_value > pmax_hi
+
+        if not below and not above:
+            # Dentro de banda
+            if self._await_verify:
+                self._await_verify = False
+                self._last_action = None
+                self._prefer_meter_after_clear = True  # <-- clave: preferir medidor en próximo posible breach
+                print("[DR] In-band on meter verification -> verification cleared (prefer meter next).")
+            return
+
+        # Fuera de banda: una sola acción por evaluación
+        # Anti-stale: si acabamos de limpiar verificación, no actuar en Mongo sin verificar con medidor
+        if source == "mongo" and self._prefer_meter_after_clear:
+            self._await_verify = True
+            print("[DR] Mongo shows breach but prefer_meter_after_clear=True -> switching to VERIFY (meter) before acting.")
+            return
+
+        if below:
             acted = self._restore_once(order_restore)
-            if not acted:
-                print("[DR] Restore: nada para encender (sin HR mapeado o todos ya ordenados ON).")
-            return  # importante: no evaluar Pmax en este ciclo
+            if acted:
+                self._last_action = "restore"
+                self._pause_until = time.time() + POST_CMD_PAUSE_S
+                self._await_verify = True
+                self._prefer_meter_after_clear = False  # ya iniciamos una nueva escalada
+            else:
+                print("[DR] Restore: nada para encender (todos ON o sin HR).")
+            return
 
-        # 2) Solo si Pmin ya se cumple, verificamos Pmax (si estamos POR ENCIMA, apagamos UNA carga)
-        if pt_value > pmax_hi:
+        if above:
             acted = self._shed_once(order_shed)
-            if not acted:
-                print("[DR] Shed: nada para apagar (sin HR mapeado o todos ya ordenados OFF).")
-        # 3) Dentro de banda: no actuar
+            if acted:
+                self._last_action = "shed"
+                self._pause_until = time.time() + POST_CMD_PAUSE_S
+                self._await_verify = True
+                self._prefer_meter_after_clear = False
+            else:
+                print("[DR] Shed: nada para apagar (todos OFF o sin HR).")
+            return
 
-
-    # -------- ciclo de lectura PT --------
+    # -------- ciclo principal --------
     def _run(self):
         while not self._stop_evt.is_set():
-            # Pausa tras un write (bloquea muestreo de P)
             now = time.time()
+
+            # Respetar la pausa dura tras cada write
             if now < self._pause_until:
                 time.sleep(min(0.1, self._pause_until - now))
                 continue
 
             try:
-                pt = read_tag_float(self.db, TAG_P_TOT)
-                if pt is not None:
-                    self.on_power_sample(pt)
+                if self._await_verify:
+                    # --- Fase VERIFY: medir con MEDIDOR ---
+                    pt_meter = read_pt_meter_verify()
+                    if pt_meter is None:
+                        # Conservador: si no hay medidor, no actuamos y mantenemos verify
+                        print("[DR] Verify: meter unavailable -> skipping action (await_verify remains).")
+                    else:
+                        self._on_power_sample_value(pt_value=pt_meter, source="meter")
                 else:
-                    print("[DR] PT tag no disponible/convertible")
+                    # --- Fase NORMAL: medir con MONGO ---
+                    pt_mongo = read_pt_mongo(self.db)
+                    if pt_mongo is None:
+                        print("[DR] PT Mongo no disponible.")
+                    else:
+                        # Si está fuera de banda en NORMAL, aquí se actúa UNA vez y se entra en VERIFY
+                        self._on_power_sample_value(pt_value=pt_mongo, source="mongo")
+
             except Exception as e:
-                print(f"[DR] Error leyendo PT desde Mongo: {e}")
+                print(f"[DR] Error en ciclo DR: {e}")
             finally:
-                # sueño “interrumpible”
+                # Sueño “interrumpible” entre chequeos (NO es la pausa de 10 s)
                 remaining = self.period_s
                 while remaining > 0 and not self._stop_evt.is_set():
                     step = min(0.1, remaining)
                     time.sleep(step)
                     remaining -= step
+
 
 # -------------------------------------------
 # -------- watcher de cambios en DR_STATE --------
@@ -317,7 +405,12 @@ def watch_dr_state_changes():
         }},
     ]
 
-    current: Optional[bool] = None
+    # Arranque según estado actual
+    current = _as_bool(read_tag_raw(db, TAG_DR_STATE))
+    print(f"[BOOT] DR_STATE initial = {current}")
+    if current:
+        reader.start()
+
     while True:
         try:
             print("[WATCH] Esperando CAMBIOS reales en DR_STATE… (Ctrl+C para salir)")
@@ -326,6 +419,7 @@ def watch_dr_state_changes():
                     fd  = ev.get("fullDocument") or {}
                     upd = (ev.get("updateDescription") or {}).get("updatedFields", {})
 
+                    # Solo avances que realmente cambian el valor
                     if ev.get("operationType") == "update" and not any(
                         k in upd for k in ("value", "valueString", "valueJson", "lastValue")
                     ):
@@ -361,6 +455,7 @@ def watch_dr_state_changes():
     try: client.close()
     except Exception: pass
     print("[EXIT] dr_onchange_periodic_pt_hr terminado.")
+
 
 # -------------------------------------------
 if __name__ == "__main__":
