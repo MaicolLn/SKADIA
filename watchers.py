@@ -34,6 +34,77 @@ MAX_RETRIES  = 8
 TIMEOUT_S    = 3         # segundos por intento escribir_plc
 BASE_BACKOFF = 0.25      # s (exponencial con jitter)
 MAX_BACKOFF  = 2         # s
+# Ruta del JSON de métricas (junto al script)
+import os
+from pathlib import Path
+
+# Same pattern as MAPPING_PATH
+BASE_DIR = Path(__file__).resolve().parent
+MEASURES_PATH = BASE_DIR / "measures_time.json"
+
+# --- Fallback HR target (by default, reuse your main Modbus host/port) ---
+MB_HOST = "127.0.0.1"
+MB_PORT = 1502
+MB_UNIT = 1
+
+MB_UNIT = 1  # ajusta al Unit-ID real del PLC/gateway
+
+# --- Nodo (numérico) -> índice 0-based del Holding Register (4x00001 ≡ idx0=0) ---
+NODE_TO_HR_IDX: dict[int, int] = {
+    645: 20,   # 4x00021
+    634: 37,
+    646: 52,
+    675: 84,
+    611: 68,
+    692: 100,
+}
+
+import re
+import re
+from typing import Optional  # ← add this
+
+def _extract_node_int(nodo_str: str) -> Optional[int]:   # ← change here
+    m = re.search(r"(\d+)", str(nodo_str))
+    return int(m.group(1)) if m else None
+
+
+def _write_hr_bool_once(idx0: int, desired: bool) -> bool:
+    """
+    Escribe 0/1 en HR idx0 (0-based) usando tus helpers.
+    Usa write_hr_u16 con reg_1b = idx0 + 1.
+    """
+    try:
+        reg_1b = int(idx0) + 1
+        write_hr_u16(
+            host=MB_HOST,
+            port=MB_PORT,
+            slave=MB_UNIT,
+            reg_1b=reg_1b,
+            value=(1 if desired else 0),
+            timeout=MODBUS_TIMEOUT,
+        )
+        print(f"[DR] HR WRITE fallback: idx0={idx0} (4x{reg_1b:05d}) <- {1 if desired else 0}")
+        return True
+    except Exception as e:
+        print(f"[DR] ERROR fallback HR idx0={idx0} (4x{idx0+1:05d}) <- {1 if desired else 0}: {e}")
+        return False
+
+def _fallback_set_opposite(nodo_str: str, desired_bool: bool) -> None:
+    """
+    Si fallan todos los intentos vía escribir_plc, fuerza el HR del 'nodo' al opuesto.
+    """
+    node = _extract_node_int(nodo_str)
+    if node is None:
+        print(f"[DR] (WARN) no pude extraer número de nodo desde '{nodo_str}'")
+        return
+    idx0 = NODE_TO_HR_IDX.get(node)
+    if idx0 is None:
+        print(f"[DR] (WARN) Nodo {node} sin HR mapeado; completa NODE_TO_HR_IDX.")
+        return
+    opposite = (not bool(desired_bool))
+    _write_hr_bool_once(idx0, opposite)
+
+
 
 def call_with_timeout(func, *args, timeout=TIMEOUT_S, **kwargs):
     with ThreadPoolExecutor(max_workers=1) as ex:
@@ -87,6 +158,38 @@ def float32_to_registers(value: float) -> Tuple[int, int]:
     reg_hi = b2u16(word_hi, border)
     reg_lo = b2u16(word_lo, border)
     return reg_hi, reg_lo
+
+MEASURES_LOCK = threading.Lock()
+
+def append_measure(nodo: str, dt_s: float, command: bool) -> None:
+    rec = {
+        "nodo": str(nodo),
+        "dt_s": round(float(dt_s), 6),
+        "command": bool(command),
+    }
+
+    with MEASURES_LOCK:
+        try:
+            # read current list (or start empty)
+            if MEASURES_PATH.exists():
+                try:
+                    data = json.loads(MEASURES_PATH.read_text(encoding="utf-8"))
+                    if not isinstance(data, list):
+                        data = []
+                except json.JSONDecodeError:
+                    data = []
+            else:
+                data = []
+
+            data.append(rec)
+
+            # write back (simple write; use temp+replace if you want atomicity)
+            MEASURES_PATH.write_text(
+                json.dumps(data, ensure_ascii=False, indent=2),
+                encoding="utf-8"
+            )
+        except Exception as e:
+            print(f"[WARN] No se pudo guardar measures_time: {e}")
 
 def registers_to_float32(regs: Sequence[int]) -> float:
     """
@@ -220,11 +323,12 @@ def on_holding_change(tag_holding: str, nuevo_valor_bool: bool, addr: str, TAG_T
     if not action:
         print(f"[SKIP] Sin mapeo para {tag_holding}")
         return
-
+    
     nodo, linea = action
 
     # serializa ventanas stop→write→start
     with PLC4X_WINDOW_LOCK:
+        t0 = time.perf_counter()
         print("[MAINT] Deteniendo plc4xclient para ventana de mando…")
         stop_plc4x()  # maneja timeouts/retries internos
 
@@ -234,10 +338,14 @@ def on_holding_change(tag_holding: str, nuevo_valor_bool: bool, addr: str, TAG_T
 
             for attempt in range(1, MAX_RETRIES + 1):
                 try:
+                    # medir el tiempo SOLO de la llamada a escribir_plc
+                    
                     ok = call_with_timeout(
                         escribir_plc, nodo, linea, bool(nuevo_valor_bool),
                         timeout=TIMEOUT_S
                     )
+                    dt = time.perf_counter() - t0  # tiempo empleado en la llamada
+
                     # “empujoncito” opcional al PLC4X haciendo lectura simple
                     revive.ping_medidores_hr3036(
                         ruta_json="mapaIEEE13.json",
@@ -249,11 +357,12 @@ def on_holding_change(tag_holding: str, nuevo_valor_bool: bool, addr: str, TAG_T
                     time.sleep(POST_WRITE_VERIFY_S)
 
                     if ok:
-                        print(f"[CMD] {tag_holding}({addr}) -> {nodo}.{linea} = {nuevo_valor_bool} | ok={ok} | attempt={attempt}")
+                        # guardar métrica (nodo + delta t)
+                        append_measure(nodo=nodo, dt_s=dt, command=True)
+                        print(f"[CMD] {tag_holding}({addr}) -> {nodo}.{linea} = {nuevo_valor_bool} | ok={ok} | attempt={attempt} | dt_s={dt:.6f}")
                         return
                     else:
                         raise RuntimeError("escribir_plc devolvió False/None")
-
                 except (FuturesTimeout, Exception) as e:
                     print(f"[WARN] escribir_plc fallo intento {attempt}/{MAX_RETRIES} para {nodo}.{linea}: {e}")
                     if attempt < MAX_RETRIES:
@@ -261,6 +370,8 @@ def on_holding_change(tag_holding: str, nuevo_valor_bool: bool, addr: str, TAG_T
                         time.sleep(backoff)
                     else:
                         print(f"[ERR] Agotados reintentos: {nodo}.{linea} = {nuevo_valor_bool}")
+                        append_measure(nodo=nodo, dt_s=0, command=False)
+                        _fallback_set_opposite(nodo, bool(nuevo_valor_bool))
                         return
 
         finally:

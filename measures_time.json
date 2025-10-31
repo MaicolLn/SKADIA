@@ -1,0 +1,82 @@
+[
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 0.080366,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  }
+]

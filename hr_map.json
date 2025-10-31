@@ -1,0 +1,326 @@
+{
+  "NODO_646_CMD01": {
+    "table": "4x",
+    "addr_1b": 49,
+    "idx0": 48,
+    "dtype": "BOOL"
+  },
+  "NODO_646_CMD02": {
+    "table": "4x",
+    "addr_1b": 50,
+    "idx0": 49,
+    "dtype": "BOOL"
+  },
+  "NODO_646_CMD03": {
+    "table": "4x",
+    "addr_1b": 51,
+    "idx0": 50,
+    "dtype": "BOOL"
+  },
+  "NODO_646_CMD04": {
+    "table": "4x",
+    "addr_1b": 52,
+    "idx0": 51,
+    "dtype": "BOOL"
+  },
+  "NODO_646_CMD05": {
+    "table": "4x",
+    "addr_1b": 53,
+    "idx0": 52,
+    "dtype": "BOOL"
+  },
+  "NODO_646_CMD06": {
+    "table": "4x",
+    "addr_1b": 54,
+    "idx0": 53,
+    "dtype": "BOOL"
+  },
+  "NODO_646_CMD07": {
+    "table": "4x",
+    "addr_1b": 55,
+    "idx0": 54,
+    "dtype": "BOOL"
+  },
+  "NODO_646_CMD08": {
+    "table": "4x",
+    "addr_1b": 56,
+    "idx0": 55,
+    "dtype": "BOOL"
+  },
+  "NODO_611_CMD01": {
+    "table": "4x",
+    "addr_1b": 65,
+    "idx0": 64,
+    "dtype": "BOOL"
+  },
+  "NODO_611_CMD02": {
+    "table": "4x",
+    "addr_1b": 66,
+    "idx0": 65,
+    "dtype": "BOOL"
+  },
+  "NODO_611_CMD03": {
+    "table": "4x",
+    "addr_1b": 67,
+    "idx0": 66,
+    "dtype": "BOOL"
+  },
+  "NODO_611_CMD04": {
+    "table": "4x",
+    "addr_1b": 68,
+    "idx0": 67,
+    "dtype": "BOOL"
+  },
+  "NODO_611_CMD05": {
+    "table": "4x",
+    "addr_1b": 69,
+    "idx0": 68,
+    "dtype": "BOOL"
+  },
+  "NODO_611_CMD06": {
+    "table": "4x",
+    "addr_1b": 70,
+    "idx0": 69,
+    "dtype": "BOOL"
+  },
+  "NODO_611_CMD07": {
+    "table": "4x",
+    "addr_1b": 71,
+    "idx0": 70,
+    "dtype": "BOOL"
+  },
+  "NODO_611_CMD08": {
+    "table": "4x",
+    "addr_1b": 72,
+    "idx0": 71,
+    "dtype": "BOOL"
+  },
+  "NODO_675_CMD01": {
+    "table": "4x",
+    "addr_1b": 81,
+    "idx0": 80,
+    "dtype": "BOOL"
+  },
+  "NODO_675_CMD02": {
+    "table": "4x",
+    "addr_1b": 82,
+    "idx0": 81,
+    "dtype": "BOOL"
+  },
+  "NODO_675_CMD03": {
+    "table": "4x",
+    "addr_1b": 83,
+    "idx0": 82,
+    "dtype": "BOOL"
+  },
+  "NODO_675_CMD04": {
+    "table": "4x",
+    "addr_1b": 84,
+    "idx0": 83,
+    "dtype": "BOOL"
+  },
+  "NODO_675_CMD05": {
+    "table": "4x",
+    "addr_1b": 85,
+    "idx0": 84,
+    "dtype": "BOOL"
+  },
+  "NODO_675_CMD06": {
+    "table": "4x",
+    "addr_1b": 86,
+    "idx0": 85,
+    "dtype": "BOOL"
+  },
+  "NODO_675_CMD07": {
+    "table": "4x",
+    "addr_1b": 87,
+    "idx0": 86,
+    "dtype": "BOOL"
+  },
+  "NODO_675_CMD08": {
+    "table": "4x",
+    "addr_1b": 88,
+    "idx0": 87,
+    "dtype": "BOOL"
+  },
+  "NODO_645_CMD01": {
+    "table": "4x",
+    "addr_1b": 17,
+    "idx0": 16,
+    "dtype": "BOOL"
+  },
+  "NODO_645_CMD03": {
+    "table": "4x",
+    "addr_1b": 19,
+    "idx0": 18,
+    "dtype": "BOOL"
+  },
+  "NODO_645_CMD04": {
+    "table": "4x",
+    "addr_1b": 20,
+    "idx0": 19,
+    "dtype": "BOOL"
+  },
+  "NODO_645_CMD05": {
+    "table": "4x",
+    "addr_1b": 21,
+    "idx0": 20,
+    "dtype": "BOOL"
+  },
+  "NODO_645_CMD06": {
+    "table": "4x",
+    "addr_1b": 22,
+    "idx0": 21,
+    "dtype": "BOOL"
+  },
+  "NODO_645_CMD07": {
+    "table": "4x",
+    "addr_1b": 23,
+    "idx0": 22,
+    "dtype": "BOOL"
+  },
+  "NODO_645_CMD08": {
+    "table": "4x",
+    "addr_1b": 24,
+    "idx0": 23,
+    "dtype": "BOOL"
+  },
+  "NODO_692_CMD01": {
+    "table": "4x",
+    "addr_1b": 97,
+    "idx0": 96,
+    "dtype": "BOOL"
+  },
+  "NODO_692_CMD02": {
+    "table": "4x",
+    "addr_1b": 98,
+    "idx0": 97,
+    "dtype": "BOOL"
+  },
+  "NODO_692_CMD03": {
+    "table": "4x",
+    "addr_1b": 99,
+    "idx0": 98,
+    "dtype": "BOOL"
+  },
+  "NODO_692_CMD04": {
+    "table": "4x",
+    "addr_1b": 100,
+    "idx0": 99,
+    "dtype": "BOOL"
+  },
+  "NODO_692_CMD05": {
+    "table": "4x",
+    "addr_1b": 101,
+    "idx0": 100,
+    "dtype": "BOOL"
+  },
+  "NODO_692_CMD06": {
+    "table": "4x",
+    "addr_1b": 102,
+    "idx0": 101,
+    "dtype": "BOOL"
+  },
+  "NODO_692_CMD07": {
+    "table": "4x",
+    "addr_1b": 103,
+    "idx0": 102,
+    "dtype": "BOOL"
+  },
+  "NODO_692_CMD08": {
+    "table": "4x",
+    "addr_1b": 104,
+    "idx0": 103,
+    "dtype": "BOOL"
+  },
+  "DR_Pmin": {
+    "table": "4x",
+    "addr_1b": 114,
+    "idx0": 113,
+    "dtype": "REAL"
+  },
+  "DR_Pmax": {
+    "table": "4x",
+    "addr_1b": 116,
+    "idx0": 115,
+    "dtype": "REAL"
+  },
+  "DR_STATE": {
+    "table": "4x",
+    "addr_1b": 106,
+    "idx0": 105,
+    "dtype": "BOOL"
+  },
+  "DR_PRI1": {
+    "table": "4x",
+    "addr_1b": 118,
+    "idx0": 117,
+    "dtype": "INT"
+  },
+  "DR_PRI2": {
+    "table": "4x",
+    "addr_1b": 120,
+    "idx0": 119,
+    "dtype": "INT"
+  },
+  "DR_PRI3": {
+    "table": "4x",
+    "addr_1b": 122,
+    "idx0": 121,
+    "dtype": "INT"
+  },
+  "NODO_645_CMD02": {
+    "table": "4x",
+    "addr_1b": 18,
+    "idx0": 17,
+    "dtype": "BOOL"
+  },
+  "NODO_634_CMD01": {
+    "table": "4x",
+    "addr_1b": 33,
+    "idx0": 32,
+    "dtype": "BOOL"
+  },
+  "NODO_634_CMD02": {
+    "table": "4x",
+    "addr_1b": 34,
+    "idx0": 33,
+    "dtype": "BOOL"
+  },
+  "NODO_634_CMD03": {
+    "table": "4x",
+    "addr_1b": 35,
+    "idx0": 34,
+    "dtype": "BOOL"
+  },
+  "NODO_634_CMD04": {
+    "table": "4x",
+    "addr_1b": 36,
+    "idx0": 35,
+    "dtype": "BOOL"
+  },
+  "NODO_634_CMD05": {
+    "table": "4x",
+    "addr_1b": 37,
+    "idx0": 36,
+    "dtype": "BOOL"
+  },
+  "NODO_634_CMD06": {
+    "table": "4x",
+    "addr_1b": 38,
+    "idx0": 37,
+    "dtype": "BOOL"
+  },
+  "NODO_634_CMD07": {
+    "table": "4x",
+    "addr_1b": 39,
+    "idx0": 38,
+    "dtype": "BOOL"
+  },
+  "NODO_634_CMD08": {
+    "table": "4x",
+    "addr_1b": 40,
+    "idx0": 39,
+    "dtype": "BOOL"
+  }
+}

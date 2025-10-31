@@ -1,0 +1,57 @@
+{
+  "Nodo_611": {
+    "Generación 1": 0,
+    "Generación 2": 1,
+    "Generación 3": 2,
+    "Capacitor_611": 3,
+    "linea_611_684": 4,
+    "carga": 5,
+    "none": 6
+  },
+  "Nodo_634": {
+    "Generación 1": 0,
+    "Generación 2": 1,
+    "Generación 3": 2,
+    "carga": 3,
+    "none": 4,
+    "transformador": 5
+  },
+  "Nodo": {
+    "carga": 0,
+    "none": 1
+  },
+  "Nodo_645": {
+    "Generación 1": 0,
+    "Generación 2": 1,
+    "Generación 3": 2,
+    "linea_632_645": 3,
+    "linea_645_646": 4,
+    "carga": 5
+  },
+  "Nodo_646": {
+    "Generación 1": 0,
+    "linea_646_645": 1,
+    "carga": 2,
+    "NONE": 3
+  },
+  "Nodo_692": {
+    "Generación 1": 0,
+    "Generación 2": 1,
+    "Generación 3": 2,
+    "linea_692_671": 3,
+    "linea_692_675": 4,
+    "carga": 5,
+    "n": 6,
+    "none": 7
+  },
+  "Nodo_675": {
+    "Generación 1": 0,
+    "Capacitor 1": 1,
+    "Generación 2": 2,
+    "Generación 3": 3,
+    "linea_675_680": 4,
+    "linea_675_692": 5,
+    "carga": 6,
+    "none": 7
+  }
+}

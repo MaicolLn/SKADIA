@@ -1,0 +1,386 @@
+{
+  "Nodo_611": {
+    "Generación 1": [
+      {
+        "cmd_idx": 1,
+        "tag": "NODO_611_CMD01",
+        "addr_1b": 65,
+        "idx0": 64
+      }
+    ],
+    "Generación 2": [
+      {
+        "cmd_idx": 2,
+        "tag": "NODO_611_CMD02",
+        "addr_1b": 66,
+        "idx0": 65
+      }
+    ],
+    "Generación 3": [
+      {
+        "cmd_idx": 3,
+        "tag": "NODO_611_CMD03",
+        "addr_1b": 67,
+        "idx0": 66
+      }
+    ],
+    "linea_611_684": [
+      {
+        "cmd_idx": 4,
+        "tag": "NODO_611_CMD04",
+        "addr_1b": 68,
+        "idx0": 67
+      }
+    ],
+    "carga": [
+      {
+        "cmd_idx": 5,
+        "tag": "NODO_611_CMD05",
+        "addr_1b": 69,
+        "idx0": 68
+      }
+    ],
+    "none": [
+      {
+        "cmd_idx": 6,
+        "tag": "NODO_611_CMD06",
+        "addr_1b": 70,
+        "idx0": 69
+      },
+      {
+        "cmd_idx": 8,
+        "tag": "NODO_611_CMD08",
+        "addr_1b": 72,
+        "idx0": 71
+      }
+    ],
+    "Capacitor_611": [
+      {
+        "cmd_idx": 7,
+        "tag": "NODO_611_CMD07",
+        "addr_1b": 71,
+        "idx0": 70
+      }
+    ]
+  },
+  "Nodo_634": {
+    "Generación 1": [
+      {
+        "cmd_idx": 1,
+        "tag": "NODO_634_CMD01",
+        "addr_1b": 33,
+        "idx0": 32
+      }
+    ],
+    "Generación 2": [
+      {
+        "cmd_idx": 2,
+        "tag": "NODO_634_CMD02",
+        "addr_1b": 34,
+        "idx0": 33
+      }
+    ],
+    "Generación 3": [
+      {
+        "cmd_idx": 3,
+        "tag": "NODO_634_CMD03",
+        "addr_1b": 35,
+        "idx0": 34
+      }
+    ],
+    "transformador": [
+      {
+        "cmd_idx": 4,
+        "tag": "NODO_634_CMD04",
+        "addr_1b": 36,
+        "idx0": 35
+      }
+    ],
+    "carga": [
+      {
+        "cmd_idx": 5,
+        "tag": "NODO_634_CMD05",
+        "addr_1b": 37,
+        "idx0": 36
+      }
+    ],
+    "none": [
+      {
+        "cmd_idx": 6,
+        "tag": "NODO_634_CMD06",
+        "addr_1b": 38,
+        "idx0": 37
+      }
+    ]
+  },
+  "Nodo": {
+    "none": [
+      {
+        "cmd_idx": 7,
+        "tag": "NODO_634_CMD07",
+        "addr_1b": 39,
+        "idx0": 38
+      },
+      {
+        "cmd_idx": 8,
+        "tag": "NODO_634_CMD08",
+        "addr_1b": 40,
+        "idx0": 39
+      }
+    ],
+    "carga": [
+      {
+        "cmd_idx": 8,
+        "tag": "NODO_645_CMD08",
+        "addr_1b": 24,
+        "idx0": 23
+      }
+    ]
+  },
+  "Nodo_645": {
+    "Generación 1": [
+      {
+        "cmd_idx": 1,
+        "tag": "NODO_645_CMD01",
+        "addr_1b": 17,
+        "idx0": 16
+      },
+      {
+        "cmd_idx": 7,
+        "tag": "NODO_645_CMD07",
+        "addr_1b": 23,
+        "idx0": 22
+      }
+    ],
+    "Generación 2": [
+      {
+        "cmd_idx": 2,
+        "tag": "NODO_645_CMD02",
+        "addr_1b": 18,
+        "idx0": 17
+      }
+    ],
+    "Generación 3": [
+      {
+        "cmd_idx": 3,
+        "tag": "NODO_645_CMD03",
+        "addr_1b": 19,
+        "idx0": 18
+      }
+    ],
+    "linea_632_645": [
+      {
+        "cmd_idx": 4,
+        "tag": "NODO_645_CMD04",
+        "addr_1b": 20,
+        "idx0": 19
+      }
+    ],
+    "carga": [
+      {
+        "cmd_idx": 5,
+        "tag": "NODO_645_CMD05",
+        "addr_1b": 21,
+        "idx0": 20
+      }
+    ],
+    "linea_645_646": [
+      {
+        "cmd_idx": 6,
+        "tag": "NODO_645_CMD06",
+        "addr_1b": 22,
+        "idx0": 21
+      }
+    ]
+  },
+  "Nodo_646": {
+    "Generación 1": [
+      {
+        "cmd_idx": 1,
+        "tag": "NODO_646_CMD01",
+        "addr_1b": 49,
+        "idx0": 48
+      },
+      {
+        "cmd_idx": 2,
+        "tag": "NODO_646_CMD02",
+        "addr_1b": 50,
+        "idx0": 49
+      },
+      {
+        "cmd_idx": 3,
+        "tag": "NODO_646_CMD03",
+        "addr_1b": 51,
+        "idx0": 50
+      }
+    ],
+    "carga": [
+      {
+        "cmd_idx": 4,
+        "tag": "NODO_646_CMD04",
+        "addr_1b": 52,
+        "idx0": 51
+      }
+    ],
+    "linea_646_645": [
+      {
+        "cmd_idx": 5,
+        "tag": "NODO_646_CMD05",
+        "addr_1b": 53,
+        "idx0": 52
+      }
+    ],
+    "NONE": [
+      {
+        "cmd_idx": 6,
+        "tag": "NODO_646_CMD06",
+        "addr_1b": 54,
+        "idx0": 53
+      },
+      {
+        "cmd_idx": 7,
+        "tag": "NODO_646_CMD07",
+        "addr_1b": 55,
+        "idx0": 54
+      },
+      {
+        "cmd_idx": 8,
+        "tag": "NODO_646_CMD08",
+        "addr_1b": 56,
+        "idx0": 55
+      }
+    ]
+  },
+  "Nodo_692": {
+    "Generación 1": [
+      {
+        "cmd_idx": 1,
+        "tag": "NODO_692_CMD01",
+        "addr_1b": 97,
+        "idx0": 96
+      }
+    ],
+    "Generación 2": [
+      {
+        "cmd_idx": 2,
+        "tag": "NODO_692_CMD02",
+        "addr_1b": 98,
+        "idx0": 97
+      }
+    ],
+    "Generación 3": [
+      {
+        "cmd_idx": 3,
+        "tag": "NODO_692_CMD03",
+        "addr_1b": 99,
+        "idx0": 98
+      }
+    ],
+    "linea_692_671": [
+      {
+        "cmd_idx": 4,
+        "tag": "NODO_692_CMD04",
+        "addr_1b": 100,
+        "idx0": 99
+      }
+    ],
+    "carga": [
+      {
+        "cmd_idx": 5,
+        "tag": "NODO_692_CMD05",
+        "addr_1b": 101,
+        "idx0": 100
+      }
+    ],
+    "linea_692_675": [
+      {
+        "cmd_idx": 6,
+        "tag": "NODO_692_CMD06",
+        "addr_1b": 102,
+        "idx0": 101
+      }
+    ],
+    "none": [
+      {
+        "cmd_idx": 7,
+        "tag": "NODO_692_CMD07",
+        "addr_1b": 103,
+        "idx0": 102
+      }
+    ],
+    "n": [
+      {
+        "cmd_idx": 8,
+        "tag": "NODO_692_CMD08",
+        "addr_1b": 104,
+        "idx0": 103
+      }
+    ]
+  },
+  "Nodo_675": {
+    "Generación 1": [
+      {
+        "cmd_idx": 1,
+        "tag": "NODO_675_CMD01",
+        "addr_1b": 81,
+        "idx0": 80
+      }
+    ],
+    "Generación 2": [
+      {
+        "cmd_idx": 2,
+        "tag": "NODO_675_CMD02",
+        "addr_1b": 82,
+        "idx0": 81
+      }
+    ],
+    "Generación 3": [
+      {
+        "cmd_idx": 3,
+        "tag": "NODO_675_CMD03",
+        "addr_1b": 83,
+        "idx0": 82
+      }
+    ],
+    "linea_675_692": [
+      {
+        "cmd_idx": 4,
+        "tag": "NODO_675_CMD04",
+        "addr_1b": 84,
+        "idx0": 83
+      }
+    ],
+    "carga": [
+      {
+        "cmd_idx": 5,
+        "tag": "NODO_675_CMD05",
+        "addr_1b": 85,
+        "idx0": 84
+      }
+    ],
+    "linea_675_680": [
+      {
+        "cmd_idx": 6,
+        "tag": "NODO_675_CMD06",
+        "addr_1b": 86,
+        "idx0": 85
+      }
+    ],
+    "Capacitor 1": [
+      {
+        "cmd_idx": 7,
+        "tag": "NODO_675_CMD07",
+        "addr_1b": 87,
+        "idx0": 86
+      }
+    ],
+    "none": [
+      {
+        "cmd_idx": 8,
+        "tag": "NODO_675_CMD08",
+        "addr_1b": 88,
+        "idx0": 87
+      }
+    ]
+  }
+}
