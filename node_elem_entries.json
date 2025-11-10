@@ -38,20 +38,12 @@
         "tag": "NODO_611_CMD05",
         "addr_1b": 69,
         "idx0": 68
-      }
-    ],
-    "none": [
+      },
       {
         "cmd_idx": 6,
         "tag": "NODO_611_CMD06",
         "addr_1b": 70,
         "idx0": 69
-      },
-      {
-        "cmd_idx": 8,
-        "tag": "NODO_611_CMD08",
-        "addr_1b": 72,
-        "idx0": 71
       }
     ],
     "Capacitor_611": [
@@ -60,6 +52,14 @@
         "tag": "NODO_611_CMD07",
         "addr_1b": 71,
         "idx0": 70
+      }
+    ],
+    "none": [
+      {
+        "cmd_idx": 8,
+        "tag": "NODO_611_CMD08",
+        "addr_1b": 72,
+        "idx0": 71
       }
     ]
   },
@@ -214,7 +214,7 @@
         "idx0": 50
       }
     ],
-    "carga": [
+    "linea_646_645": [
       {
         "cmd_idx": 4,
         "tag": "NODO_646_CMD04",
@@ -222,7 +222,7 @@
         "idx0": 51
       }
     ],
-    "linea_646_645": [
+    "carga": [
       {
         "cmd_idx": 5,
         "tag": "NODO_646_CMD05",
@@ -350,7 +350,7 @@
         "idx0": 83
       }
     ],
-    "carga": [
+    "none": [
       {
         "cmd_idx": 5,
         "tag": "NODO_675_CMD05",
@@ -374,7 +374,7 @@
         "idx0": 86
       }
     ],
-    "none": [
+    "carga": [
       {
         "cmd_idx": 8,
         "tag": "NODO_675_CMD08",

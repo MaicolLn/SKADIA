@@ -78,5 +78,475 @@
     "nodo": "Nodo_646",
     "dt_s": 0.0,
     "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 11.582499,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 0.0,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 15.140862,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 18.810812,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 11.491383,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 23.254162,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 11.538875,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 11.433218,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 22.632176,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 23.834242,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 16.202894,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 22.222412,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 21.910604,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 33.12964,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 11.453463,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 11.492404,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_646",
+    "dt_s": 11.591111,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 11.629971,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 24.481754,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 16.409982,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 51.975174,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 11.498198,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 21.797136,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 11.529713,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 21.673159,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 21.91995,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 16.959863,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 17.70552,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 11.03648,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 24.038051,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 22.60009,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 12.93831,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 13.376711,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 21.940585,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 11.472623,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 11.537897,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 21.897936,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 11.553359,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 21.794468,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 21.821656,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 11.262647,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 11.746824,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 19.987606,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 20.113485,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 23.222619,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 19.913597,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 19.786794,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 18.007928,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 11.513839,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 22.078529,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 22.184982,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 11.544229,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 11.518374,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 11.546766,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 11.001664,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 11.588536,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 21.858523,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 29.650678,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 21.939907,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 21.781863,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 21.669517,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 21.916079,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 19.554642,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 11.518796,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 11.535752,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 19.808673,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 17.961194,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 10.995091,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 15.712997,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_611",
+    "dt_s": 11.511155,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 49.393376,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 19.82862,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 22.113365,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 14.544623,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 26.018949,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 11.581272,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 22.065335,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 11.500435,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 22.162885,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_675",
+    "dt_s": 21.858007,
+    "command": false
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 11.130085,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 11.644146,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_634",
+    "dt_s": 11.360594,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 11.536876,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_645",
+    "dt_s": 11.509788,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 11.575538,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 11.48102,
+    "command": true
+  },
+  {
+    "nodo": "Nodo_692",
+    "dt_s": 11.8007,
+    "command": true
   }
 ]

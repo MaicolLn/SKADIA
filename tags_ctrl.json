@@ -5,7 +5,7 @@
     "NODO_611_CMD03": ["Nodo_611", "Generación 3"],
     "NODO_611_CMD04": ["Nodo_611", "linea_611_684"],
     "NODO_611_CMD05": ["Nodo_611", "carga"],
-    "NODO_611_CMD06": ["Nodo_611", "none"],
+    "NODO_611_CMD06": ["Nodo_611", "carga"],
     "NODO_611_CMD07": ["Nodo_611", "Capacitor_611"],
     "NODO_611_CMD08": ["Nodo_611", "none"],
 
@@ -49,10 +49,10 @@
     "NODO_675_CMD02": ["Nodo_675", "Generación 2"],
     "NODO_675_CMD03": ["Nodo_675", "Generación 3"],
     "NODO_675_CMD04": ["Nodo_675", "linea_675_692"],
-    "NODO_675_CMD05": ["Nodo_675", "carga"],
+    "NODO_675_CMD05": ["Nodo_675", "none"],
     "NODO_675_CMD06": ["Nodo_675", "linea_675_680"],
     "NODO_675_CMD07": ["Nodo_675", "Capacitor 1"],
-    "NODO_675_CMD08": ["Nodo_675", "none"]
+    "NODO_675_CMD08": ["Nodo_675", "carga"]
   },
 
   "WATCH_TAGS": [
