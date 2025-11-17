@@ -50,10 +50,10 @@ MB_TIMEOUT      = 2.0
 # Mapea NODO -> índice 0-based del HR a escribir (U16 0/1)
 NODE_TO_HR_IDX: dict[int, int] = {
     645: 20,   # 4x00021
-    634: 37,
+    634: 36,
     646: 52,
-    675: 84,
-    611: 68,
+    675: 87,
+    611: 69,
     692: 100,
 }
 
@@ -62,7 +62,7 @@ READ_PERIOD_S       = 1.0
 CONNECT_BACKOFF     = 2.0
 
 # Histéresis relativa
-HYST_REL            = 0.05   # 5%
+HYST_REL            = 0.01   # 5%
 
 # Pausa dura después de cada write
 POST_CMD_PAUSE_S    = 20  # ajusta aquí la espera entre decisiones
