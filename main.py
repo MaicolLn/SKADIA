@@ -144,7 +144,15 @@ class TypedPersistentHRBlock(ModbusSequentialDataBlock):
 
 # -------- Servidor --------
 async def main():
-    initial_vals = _load_store(STORE_PATH, HR_COUNT)
+    # En vez de: initial_vals = _load_store(STORE_PATH, HR_COUNT)
+    # Arrancar siempre con todo a 0
+    initial_vals = [0] * HR_COUNT
+
+    # (Opcional) sobrescribir hr_store.json al inicio para que quede limpio:
+    global _store_lock
+    with _store_lock:
+        _save_store_atomic(STORE_PATH, initial_vals)
+
     hr_block = TypedPersistentHRBlock(0, initial_vals, STORE_PATH)
 
     slave = ModbusSlaveContext(
@@ -152,12 +160,12 @@ async def main():
         co=ModbusSequentialDataBlock(0, [0]*1),
         hr=hr_block,
         ir=ModbusSequentialDataBlock(0, [0]*1),
-        zero_mode=True,  # 0-based: 4x00001 == index 0
+        zero_mode=True,
     )
     context = ModbusServerContext(slaves={UNIT_ID: slave}, single=False)
 
     print(f"Servidor Modbus TCP (HR mixtos persistentes) en {LISTEN_ADDR[0]}:{LISTEN_ADDR[1]}, Unit={UNIT_ID}")
-    print(f"HR inicializados desde: {STORE_PATH.resolve() if STORE_PATH.exists() else '(nuevo)'}")
+    print(f"HR inicializados en limpio, archivo: {STORE_PATH.resolve()}")
     await StartAsyncTcpServer(context=context, address=LISTEN_ADDR)
 
 if __name__ == "__main__":
